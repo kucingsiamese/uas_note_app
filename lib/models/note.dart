@@ -6,6 +6,8 @@ class Note {
   final String content;
   final String category;
   final DateTime createdAt;
+  final Comparable color;
+  final String date;
   DateTime? deadline;
   bool isImportant;
 
@@ -15,6 +17,8 @@ class Note {
     required this.content,
     required this.category,
     required this.createdAt,
+    required this.date,
+    required this.color,
     this.deadline,
     this.isImportant = false,
   });
