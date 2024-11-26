@@ -29,11 +29,10 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   void initState() {
     super.initState();
     if (widget.note != null) {
-      // If a note is passed, populate the fields with existing data
+      // Jika catatan diteruskan, isi kolom dengan data yang ada
       _titleController.text = widget.note!.title;
       _contentController.text = widget.note!.content;
-      final _categoryController = TextEditingController();
-      _selectedColor = widget.note!.color;
+      _selectedColor = widget.note!.color as Color;
     }
   }
 
@@ -42,7 +41,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
     final noteProvider = Provider.of<NoteProvider>(context, listen: false);
 
     return Scaffold(
-      backgroundColor: _selectedColor ?? Colors.white,
+      backgroundColor: _selectedColor ?? Colors.black,
       appBar: AppBar(
         title: Text(widget.note == null ? 'New Note' : 'Edit Note'),
         actions: [
@@ -58,19 +57,28 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                       id: DateTime.now().toString(),
                       title: _titleController.text,
                       content: _contentController.text,
-                      color: _selectedColor ?? Colors.white,
+                      backgroundColor: _selectedColor ?? Colors.black,
+                      color: _selectedColor ?? Colors.black,
+                      category: 'YourCategoryValue',
                       date: DateFormat.yMMMd().format(DateTime.now()),
+                      createdAt: DateTime.now(),
                     ),
                   );
                 } else {
                   // Updating an existing note
                   noteProvider.updateNote(
-                    this.id: widget.note!.id,
-                    title: _titleController.text,
-                    content: _contentController.text,
-                    category: _categoryController.text,
-                    color: _selectedColor ?? Colors.white,
-                    date: widget.note!.date,
+                    Note(
+                      id: widget.note!.id,
+                      title: _titleController.text,
+                      content: _contentController.text,
+                      category: _categoryController.text,
+                      backgroundColor: _selectedColor ?? Colors.black,
+                      color: _selectedColor ?? Colors.black,
+                      date: widget.note!.date,
+                      createdAt: widget.note!.createdAt,
+                      deadline: widget.note!.deadline,
+                      isImportant: widget.note!.isImportant,
+                    ),
                   );
                 }
                 Navigator.of(context).pop();
@@ -92,7 +100,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                   title: const Text('Pick Note Color'),
                   content: SingleChildScrollView(
                     child: ColorPicker(
-                      selectedColor: _selectedColor ?? Colors.white,
+                      selectedColor: _selectedColor ?? Colors.black,
                       onColorSelected: (color) {
                         setState(() {
                           _selectedColor = color;
@@ -115,6 +123,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               controller: _titleController,
               decoration: const InputDecoration(labelText: 'Title'),
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              cursorColor: Colors.black,
             ),
             const SizedBox(height: 20),
             Expanded(
@@ -124,6 +133,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                 maxLines: null,
                 expands: true,
                 style: const TextStyle(fontSize: 16),
+                cursorColor: Colors.black,
               ),
             ),
           ],
@@ -148,17 +158,17 @@ class ColorPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     // List of predefined color options
     final List<Color> colors = [
-      Colors.white,
-      Colors.yellow,
-      Colors.red,
-      Colors.blue,
-      Colors.green,
-      Colors.orange,
-      Colors.purple,
+      const Color.fromARGB(195, 241, 236, 231),
+      const Color.fromARGB(255, 223, 209, 89),
+      const Color.fromARGB(255, 223, 135, 128),
+      const Color.fromARGB(255, 99, 156, 202),
+      const Color.fromARGB(255, 93, 223, 98),
+      const Color.fromRGBO(221, 170, 93, 1),
+      const Color.fromARGB(255, 217, 108, 236),
       Colors.brown,
-      Colors.pink,
-      Colors.teal,
-      Colors.cyan,
+      const Color.fromARGB(255, 235, 93, 140),
+      const Color.fromARGB(255, 80, 182, 172),
+      const Color.fromARGB(255, 66, 63, 226),
     ];
 
     return Wrap(

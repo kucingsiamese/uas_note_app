@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
     final notes = noteProvider.notes;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5DC), // Beige background color
+      backgroundColor: const Color.fromARGB(255, 196, 129, 250),
       appBar: AppBar(
         title: const Text(
           'My Notes',
@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
               // Navigate to NoteDetailScreen for creating a new note
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (ctx) => const NoteDetailScreen(),
+                  builder: (ctx) => NoteDetailScreen(),
                 ),
               );
             },
@@ -63,7 +63,8 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                     child: Card(
-                      color: note.backgroundColor ?? Colors.white,
+                      color: note.backgroundColor ??
+                          const Color.fromARGB(255, 23, 176, 247),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),

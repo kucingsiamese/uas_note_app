@@ -1,4 +1,4 @@
-//import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 class Note {
   final String id;
@@ -6,7 +6,8 @@ class Note {
   final String content;
   final String category;
   final DateTime createdAt;
-  final Comparable color;
+  final Color color;
+  final Color backgroundColor;
   final String date;
   DateTime? deadline;
   bool isImportant;
@@ -15,6 +16,7 @@ class Note {
     required this.id,
     required this.title,
     required this.content,
+    required this.backgroundColor,
     required this.category,
     required this.createdAt,
     required this.date,
