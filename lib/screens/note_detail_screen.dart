@@ -9,8 +9,9 @@ class NoteDetailScreen extends StatefulWidget {
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
   TextEditingController categoryController = TextEditingController();
-  // Tambahkan ini
+  // Initial selected color and deadline for the note
   Color selectedColor = Colors.blue;
+  DateTime? selectedDeadline;
 
   // Constructor with an optional note parameter
   NoteDetailScreen({this.note, super.key});
@@ -24,15 +25,17 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   final _contentController = TextEditingController();
   final _categoryController = TextEditingController();
   Color? _selectedColor;
+  DateTime? _selectedDeadline;
 
   @override
   void initState() {
     super.initState();
     if (widget.note != null) {
-      // Jika catatan diteruskan, isi kolom dengan data yang ada
+      // If a note is passed, fill fields with existing data
       _titleController.text = widget.note!.title;
       _contentController.text = widget.note!.content;
-      _selectedColor = widget.note!.color as Color;
+      _selectedColor = widget.note!.color;
+      _selectedDeadline = widget.note!.deadline;
     }
   }
 
@@ -57,11 +60,12 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                       id: DateTime.now().toString(),
                       title: _titleController.text,
                       content: _contentController.text,
-                      backgroundColor: _selectedColor ?? Colors.black,
                       color: _selectedColor ?? Colors.black,
+                      backgroundColor: Colors.black,
                       category: 'YourCategoryValue',
                       date: DateFormat.yMMMd().format(DateTime.now()),
                       createdAt: DateTime.now(),
+                      deadline: _selectedDeadline,
                     ),
                   );
                 } else {
@@ -72,11 +76,11 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                       title: _titleController.text,
                       content: _contentController.text,
                       category: _categoryController.text,
-                      backgroundColor: _selectedColor ?? Colors.black,
                       color: _selectedColor ?? Colors.black,
+                      backgroundColor: Colors.black,
                       date: widget.note!.date,
                       createdAt: widget.note!.createdAt,
-                      deadline: widget.note!.deadline,
+                      deadline: _selectedDeadline,
                       isImportant: widget.note!.isImportant,
                     ),
                   );
@@ -113,6 +117,24 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               );
             },
           ),
+          IconButton(
+            icon: const Icon(Icons.calendar_today),
+            onPressed: () async {
+              // Show a date picker for the deadline
+              final selectedDate = await showDatePicker(
+                context: context,
+                initialDate: _selectedDeadline ?? DateTime.now(),
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2100),
+              );
+
+              if (selectedDate != null) {
+                setState(() {
+                  _selectedDeadline = selectedDate;
+                });
+              }
+            },
+          ),
         ],
       ),
       body: Padding(
@@ -136,6 +158,16 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                 cursorColor: Colors.black,
               ),
             ),
+            const SizedBox(height: 20),
+            if (_selectedDeadline != null)
+              Text(
+                'Deadline: ${DateFormat.yMMMd().format(_selectedDeadline!)}',
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            const SizedBox(height: 10),
           ],
         ),
       ),

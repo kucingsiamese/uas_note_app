@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/note_provider.dart';
 import '../screens/note_detail_screen.dart';
 import '../widgets/note_list.dart';
+import 'package:intl/intl.dart'; // For date formatting
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,6 +12,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final noteProvider = Provider.of<NoteProvider>(context);
     final notes = noteProvider.notes;
+    final TextEditingController searchController = TextEditingController();
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 196, 129, 250),
@@ -33,6 +35,64 @@ class HomeScreen extends StatelessWidget {
             },
           ),
         ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(120.0),
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Column(
+              children: [
+                // Search Bar
+                TextField(
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search notes...',
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onChanged: (query) {
+                    // Update search results
+                    noteProvider.searchNotes(query);
+                  },
+                ),
+                const SizedBox(height: 10),
+                // Filter by Deadline Button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () async {
+                        final selectedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2100),
+                        );
+
+                        if (selectedDate != null) {
+                          noteProvider.filterByDeadline(selectedDate);
+                        }
+                      },
+                      icon: const Icon(Icons.calendar_today),
+                      label: const Text('Filter by Deadline'),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        // Clear search and deadline filters
+                        searchController.clear();
+                        noteProvider.clearSearch();
+                        noteProvider.clearDeadlineFilter();
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
       body: notes.isEmpty
           ? const Center(
@@ -63,8 +123,8 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                     child: Card(
-                      color: note.backgroundColor ??
-                          const Color.fromARGB(255, 23, 176, 247),
+                      color:
+                          note.color ?? const Color.fromARGB(255, 23, 176, 247),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
@@ -95,6 +155,15 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                             const Spacer(),
+                            // Display deadline if available
+                            if (note.deadline != null)
+                              Text(
+                                'Deadline: ${DateFormat.yMMMd().format(note.deadline!)}',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [

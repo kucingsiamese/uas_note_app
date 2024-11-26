@@ -9,7 +9,7 @@ class Note {
   final Color color;
   final Color backgroundColor;
   final String date;
-  DateTime? deadline;
+  final DateTime? deadline;
   bool isImportant;
 
   Note({
