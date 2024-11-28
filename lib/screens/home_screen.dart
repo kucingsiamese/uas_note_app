@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import 'note_detail_screen.dart';
 import '../providers/note_provider.dart';
-import '../screens/note_detail_screen.dart';
-import '../widgets/note_list.dart';
-import 'package:intl/intl.dart'; // For date formatting
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -23,16 +22,29 @@ class HomeScreen extends StatelessWidget {
         ),
         backgroundColor: Colors.black,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              // Navigate to NoteDetailScreen for creating a new note
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (ctx) => NoteDetailScreen(),
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: GestureDetector(
+              onTap: () {
+                // Navigate to NoteDetailScreen for creating a new note
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (ctx) => NoteDetailScreen(),
+                  ),
+                );
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: const BoxDecoration(
+                  color: Colors.purple, // Warna kontras untuk tombol tambah
+                  shape: BoxShape.circle,
                 ),
-              );
-            },
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.white, // Warna putih untuk ikon tambah
+                ),
+              ),
+            ),
           ),
         ],
         bottom: PreferredSize(
