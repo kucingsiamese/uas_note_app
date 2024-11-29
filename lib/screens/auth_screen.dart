@@ -40,7 +40,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEEE9F9),
+      backgroundColor: const Color.fromARGB(255, 3, 0, 10),
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -163,7 +163,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.apple, size: 36),
-                      color: Colors.black,
+                      color: const Color.fromARGB(255, 252, 250, 250),
                       onPressed: () {
                         //sign-in Apple
                       },
