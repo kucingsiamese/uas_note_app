@@ -31,7 +31,6 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   void initState() {
     super.initState();
     if (widget.note != null) {
-      // If a note is passed, fill fields with existing data
       _titleController.text = widget.note!.title;
       _contentController.text = widget.note!.content;
       _selectedColor = widget.note!.color;
@@ -188,7 +187,7 @@ class ColorPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // List of predefined color options
+    // List of color options
     final List<Color> colors = [
       const Color.fromARGB(195, 241, 236, 231),
       const Color.fromARGB(255, 223, 209, 89),

@@ -5,9 +5,8 @@ class NoteProvider with ChangeNotifier {
   List<Note> _notes = [];
   String _searchQuery = '';
   String _categoryFilter = 'All';
-  DateTime? _deadlineFilter; // Deadline filter
+  DateTime? _deadlineFilter;
 
-  // Computed property to get the filtered notes list
   List<Note> get notes {
     return _notes.where((note) {
       // Check category and search query filters
@@ -25,13 +24,13 @@ class NoteProvider with ChangeNotifier {
     }).toList();
   }
 
-  // Method to add a new note
+  // to add a new note
   void addNote(Note note) {
     _notes.add(note);
     notifyListeners();
   }
 
-  // Method to update an existing note
+  // to update an existing note
   void updateNote(Note note) {
     final index = _notes.indexWhere((n) => n.id == note.id);
     if (index != -1) {
@@ -40,37 +39,37 @@ class NoteProvider with ChangeNotifier {
     }
   }
 
-  // Method to delete a note by ID
+  // to delete a note by ID
   void deleteNote(String id) {
     _notes.removeWhere((note) => note.id == id);
     notifyListeners();
   }
 
-  // Method to search notes by title or content
+  // to search notes by title or content
   void searchNotes(String query) {
     _searchQuery = query;
     notifyListeners();
   }
 
-  // Method to filter notes by category
+  // to filter notes by category
   void filterByCategory(String category) {
     _categoryFilter = category;
     notifyListeners();
   }
 
-  // Method to filter notes by deadline
+  // to filter notes by deadline
   void filterByDeadline(DateTime? deadline) {
     _deadlineFilter = deadline;
     notifyListeners();
   }
 
-  // Method to clear the search filter
+  // to clear the search filter
   void clearSearch() {
     _searchQuery = '';
     notifyListeners();
   }
 
-  // Method to clear the deadline filter
+  // to clear the deadline filter
   void clearDeadlineFilter() {
     _deadlineFilter = null;
     notifyListeners();

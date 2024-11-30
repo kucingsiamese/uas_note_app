@@ -36,12 +36,12 @@ class HomeScreen extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: const BoxDecoration(
-                  color: Colors.purple, // Warna kontras untuk tombol tambah
+                  color: Colors.purple,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.add,
-                  color: Colors.white, // Warna putih untuk ikon tambah
+                  color: Colors.white,
                 ),
               ),
             ),

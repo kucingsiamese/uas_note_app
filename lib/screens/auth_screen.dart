@@ -89,7 +89,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 const SizedBox(height: 20),
                 TextField(
                   controller: _passwordController,
-                  obscureText: _hidePassword, // Sembunyikan password
+                  obscureText: _hidePassword,
                   style:
                       const TextStyle(color: Color.fromARGB(255, 177, 64, 165)),
                   decoration: InputDecoration(
