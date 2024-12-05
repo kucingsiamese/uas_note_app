@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/note.dart';
 
 class NoteProvider with ChangeNotifier {
-  List<Note> _notes = [];
+  final List<Note> _notes = [];
   String _searchQuery = '';
   String _categoryFilter = 'All';
   DateTime? _deadlineFilter;

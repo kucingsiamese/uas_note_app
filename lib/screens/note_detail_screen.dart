@@ -9,11 +9,10 @@ class NoteDetailScreen extends StatefulWidget {
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
   TextEditingController categoryController = TextEditingController();
-  // Initial selected color and deadline for the note
+
   Color selectedColor = Colors.blue;
   DateTime? selectedDeadline;
 
-  // Constructor with an optional note parameter
   NoteDetailScreen({this.note, super.key});
 
   @override
@@ -180,10 +179,10 @@ class ColorPicker extends StatelessWidget {
   final Function(Color) onColorSelected;
 
   const ColorPicker({
-    Key? key,
+    super.key,
     required this.selectedColor,
     required this.onColorSelected,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
